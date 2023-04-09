@@ -49,12 +49,13 @@ const Navbar = ({ currentPage }: PagePropType) => {
         color="#17256D"
         fontWeight="semibold"
       >
-        {PAGES.map((page) => (
+        {PAGES.map((page, i) => (
           <Link
             {...(currentPage === page.text
               ? { ...activeStyle, ...linkStyles }
               : linkStyles)}
             href={page.link}
+            key={i}
           >
             {page.text}
           </Link>
