@@ -10,6 +10,19 @@ const Home: NextPage = () => {
     fontSize: "5xl",
     fontFamily: "Sora",
   };
+
+  const downloadResume = () => {
+    fetch("Resume.pdf").then((response) => {
+      response.blob().then((blob) => {
+        const fileURL = window.URL.createObjectURL(blob);
+        let alink = document.createElement("a");
+        alink.href = fileURL;
+        alink.download = "Resume.pdf";
+        alink.click();
+      });
+    });
+  };
+
   return (
     <Box
       bgImg="./bg.svg"
@@ -47,10 +60,19 @@ const Home: NextPage = () => {
               </Text>
             </Flex>
             <Flex flexDir="row" gridGap="1em" w="80%" mt="5%">
-              <Button variant="solid-blue" flex="1">
+              <Button
+                variant="solid-blue"
+                flex="1"
+                onClick={() => window.location.assign("/projects")}
+              >
                 CHECK OUT MY WORK
               </Button>
-              <Button variant="outline-blue" flex="1" bg="white">
+              <Button
+                variant="outline-blue"
+                flex="1"
+                bg="white"
+                onClick={downloadResume}
+              >
                 MY PORTFOLIO
               </Button>
             </Flex>
