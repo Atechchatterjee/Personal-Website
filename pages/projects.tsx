@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import { Text, Image, Heading, Box, Flex, Button } from "@chakra-ui/react";
 import Watermark from "../components/Watermark";
 import Navbar from "../components/Navbar";
+import { BsGithub } from "react-icons/bs";
+import { FaOctopusDeploy } from "react-icons/fa";
 
 interface ProjectCardsProps {
   imageURL: string;
@@ -50,7 +52,10 @@ const ProjectCards = ({
             flex="1"
             onClick={() => window.open(githubLink)}
           >
-            GITHUB
+            <Flex gridGap="1em">
+              <BsGithub />
+              GITHUB
+            </Flex>
           </Button>
           {deployedLink ? (
             <Button
@@ -59,7 +64,12 @@ const ProjectCards = ({
               bg="white"
               onClick={() => window.open(deployedLink)}
             >
-              DEPLOYED LINK
+              <Flex gridGap="1em">
+                <Box color="#3C59C6">
+                  <FaOctopusDeploy />
+                </Box>
+                DEPLOYED LINK
+              </Flex>
             </Button>
           ) : (
             <></>
@@ -87,7 +97,7 @@ const Projects: NextPage = () => {
       <Watermark text1="PROJECTS" ml="0%" mt="5%" textAlign="center" />
       <Box position="absolute" zIndex="100" w="100%" h="100vh">
         <Navbar currentPage="Projects" />
-        <Flex flexDir="column" gridGap="5em">
+        <Flex flexDir="column" gridGap="5em" paddingBottom="4em">
           <Flex flexDir="row" gridGap="0.6em" h="5em" ml="30%" mr="25%" mt="3%">
             <Heading
               {...HeadingStyle}
