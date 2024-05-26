@@ -1,86 +1,113 @@
-import { cn } from "@/lib/utils";
-import { staatlitches } from "./font";
+"use client"
 import Navbar from "@/components/Navbar";
 import Image from "next/image";
-import Button from "@/components/Buttons";
-import { FaLinkedin, FaGithub, FaDiscord } from "react-icons/fa";
-import { IoMdMail } from "react-icons/io";
-import { MdOutlineWorkOutline } from "react-icons/md";
-import { IoGitNetwork } from "react-icons/io5";
-import { FaDownload } from "react-icons/fa6";
+import { cn } from "@/lib/utils";
+import { darker_grotesque } from "./font";
+import { Button } from "@/components/ui/button";
+import { RiStackFill, RiDownload2Line } from "@remixicon/react";
+import { useEffect } from "react";
+import { motion, useMotionValue, useSpring } from "framer-motion";
+import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 
-export default function Home() {
+export function HeroScrollDemo() {
   return (
-    <main>
-      <div className="relative overflow-x-clip w-[100rem] m-auto">
-        <Navbar />
-        <div className="flex pt-[7rem]">
-          <div className="relative flex flex-col gap-3 flex-1">
-            <h1
-              className={cn(
-                staatlitches.className,
-                "w-[50rem] text-[6rem] leading-[6.5rem]"
-              )}
-            >
-              I’m{" "}
-              <span className="text-[#867460] underline underline-offset-8">
-                {" "}
-                Anish chatterjee,
-              </span>{" "}
-              a developer Striving For excellence.
-            </h1>
-            <p className="text-[#5C5C5C] font-medium text-[1.5rem]">
-              Full Stack Developer & Computer Science Student
-            </p>
-            <div className="circle w-4 h-4 rounded-full bg-black absolute top-[15.2rem] left-[37.5rem] outline outline-1 outline-offset-2" />
-            <div className="flex flex-row gap-5 mt-16 w-[50%]">
-              <Button className="w-full flex-1 flex-row  gap-3">
-                <IoGitNetwork />
-                My Work
-              </Button>
-              <Button variant="secondary" className="w-full flex-1 gap-3">
-                <FaDownload />
-                My Resume
-              </Button>
-            </div>
-          </div>
-          <div className="flex-1"></div>
-        </div>
-        <div className="flex w-full justify-end text-right pt-[6rem] pr-[6rem]">
-          <div className="flex flex-col w-[25rem]">
-            <h2 className={cn(staatlitches.className, "text-[2.5rem]")}>
-              Connect with me
-            </h2>
-            <p className="text-[1.2rem]">
-              Great to meet you. Want to have a conversation? Here are my
-              socials
-            </p>
-            <div className="flex gap-10 pt-8 justify-end">
-              <button>
-                <FaLinkedin className="scale-[170%] hover:scale-[180%] transition-all cursor-pointer text-[#5C5C5C] hover:text-black" />
-              </button>
-              <button>
-                <FaGithub className="scale-[170%] hover:scale-[180%] transition-all cursor-pointer text-[#5C5C5C] hover:text-black" />
-              </button>
-              <button>
-                <FaDiscord className="scale-[170%] hover:scale-[180%] transition-all cursor-pointer text-[#5C5C5C] hover:text-black" />
-              </button>
-              <button>
-                <IoMdMail className="scale-[170%] hover:scale-[180%] transition-all  cursor-pointer text-[#5C5C5C] hover:text-black" />
-              </button>
-            </div>
-          </div>
-        </div>
+    <div className="flex flex-col overflow-hidden">
+      <ContainerScroll
+        titleComponent={<></>}
+      >
         <Image
-          src="/bg-illus-1.svg"
-          alt="bg-illus"
-          className="absolute top-[11rem] right-[-16rem] z-[-1]"
-          width="1220"
-          height="420"
+          src={`/cndekart-browser.jpg`}
+          alt="hero"
+          height={720}
+          width={1400}
+          className="mx-auto rounded-2xl object-cover h-full object-left-top"
+          draggable={false}
         />
-        <div className="w-[50rem] h-[20rem] top-[27.7rem] left-[40rem] absolute bg-[url('/bg-border-1.svg')] bg-no-repeat bg-cover" />
-        <div className="w-[72rem] h-[20rem] top-[50.5rem] left-[3rem] absolute bg-[url('/bg-border-2.svg')] bg-no-repeat bg-cover" />
+      </ContainerScroll>
+    </div>
+  );
+}
+export default function Home() {
+  const mouse = {
+    x: useMotionValue(0),
+    y: useMotionValue(0)
+  }
+
+  const smoothOptions = { damping: 30, stiffness: 500, mass: 0.8 }
+
+  const smoothMouse = {
+    x: useSpring(mouse.x, smoothOptions),
+    y: useSpring(mouse.y, smoothOptions)
+  }
+
+  const manageMouseMove = (e: any) => {
+    const { clientX, clientY } = e;
+
+    mouse.x.set(clientX);
+    mouse.y.set(clientY);
+  }
+
+  useEffect(() => {
+    window.addEventListener("mousemove", manageMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", manageMouseMove)
+    };
+  }, []);
+
+  return (
+    <div className="overflow-y-clip">
+      <div className="absolute z-[-1000] blur-3xl">
+        <motion.div
+          className={`fixed top-0 left-0`}
+          style={{
+            left: smoothMouse.x,
+            top: smoothMouse.y,
+            backdropFilter: 'blur(100rem)',
+            opacity: "0.2"
+          }}
+          animate={{
+            backgroundColor: "#C64564",
+            width: "400px",
+            height: "400px",
+            borderRadius: "50%",
+          }}
+          initial={{
+            x: 0,
+            y: 0,
+          }}
+          transition={{ type: "tween", ease: "backOut", duration: 0.5 }}
+        />
       </div>
-    </main>
+      <main className="px-28 h-[100%] text-center z-[100000]">
+        <Navbar />
+        <div className="flex flex-col m-auto w-[50rem] mt-[5rem] z-[100000]">
+          <div className="rounded-full bg-white opacity-50 flex pl-2 pr-0 py-2 font-medium text-sm items-center gap-2 w-[13.3rem] mx-auto">
+            <img src="./greeting-hand.jpg" />
+            Hey, Great to meet you
+          </div>
+          <div className="flex flex-col gap-5 mt-[-0.8rem]">
+            <h1 className={cn(darker_grotesque.className, "font-semibold text-[5rem]")}>Anish Chattopadhyay</h1>
+            <p className="text-lg leading-8 w-[45rem] mx-auto">
+              Hey, I am a <strong>full stack web and mobile developer</strong> passionate to build solutions for business. Currently in my final year of pursuing B.Tech in Computer Science. Interested in checking out my work?
+            </p>
+          </div>
+          <div className="flex gap-5 mt-[3.5rem] mx-auto">
+            <Button variant="default" className="gap-3 w-[9rem]">
+              <RiStackFill size={20} />
+              <p>My Work</p>
+            </Button>
+            <Button variant="outline" className="gap-5 w-[9rem]">
+              <p>Resume</p>
+              <RiDownload2Line size={20} />
+            </Button>
+          </div>
+        </div>
+        <div className="flex flex-col mt-[10rem]">
+          <h2 className={cn(darker_grotesque.className, "font-semibold text-[3.5rem]")}>My Work</h2>
+          <p>These are couple of the projects I worked on</p>
+          <HeroScrollDemo />
+        </div>
+      </main>
+    </div>
   );
 }

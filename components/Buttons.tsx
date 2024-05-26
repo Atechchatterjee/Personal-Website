@@ -29,7 +29,7 @@ export default function CustomButton({
       return (
         <Button
           className={cn(
-            "transition-all relative bg-background py-6 hover:bg-background/90 border-2 border-black rounded-none shadow-[5px_5px_rgba(0,0,0,1)] text-md font-medium hover:translate-x-[0.4rem] hover:translate-y-[0.4rem] hover:tansition-all hover:shadow-none text-black hover:bg-black hover:text-white",
+            "transition-all relative bg-transparent py-6 border-2 border-black rounded-none shadow-[5px_5px_rgba(0,0,0,1)] text-md font-medium hover:translate-x-[0.4rem] hover:translate-y-[0.4rem] hover:tansition-all hover:shadow-none text-black hover:bg-black hover:text-white",
             className
           )}
           {...props}
@@ -38,6 +38,6 @@ export default function CustomButton({
         </Button>
       );
     default:
-      return null;
+      <></>;
   }
 }
