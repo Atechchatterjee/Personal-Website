@@ -1,6 +1,10 @@
 "use client";
 import React, { useEffect, useRef } from "react";
 import { useScroll, useTransform, motion, MotionValue, circOut, circIn } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { darker_grotesque } from "@/app/font";
+import { Button } from "./button";
+import { RiDownload2Line, RiStackFill, RiGithubFill, RiArrowRightFill, RiArrowRightLine } from "@remixicon/react";
 
 export const ContainerScroll = ({
   titleComponent,
@@ -28,7 +32,7 @@ export const ContainerScroll = ({
   }, []);
 
   const scaleDimensions = () => {
-    return isMobile ? [0.7, 0.9] : [1.05, 1];
+    return isMobile ? [0.7, 0.9] : [1, 1];
   };
 
   const rotate = useTransform(
@@ -42,24 +46,18 @@ export const ContainerScroll = ({
 
   useEffect(() => {
     console.log({ rotate: rotate.get() })
-  })
+  });
 
   return (
     <div
-      className="h-[60rem] md:h-[80rem] flex relative p-2 md:p-20"
-      ref={containerRef}
+      className="py-10 md:py-0 w-fit mx-auto relative"
+      style={{
+        perspective: "1000px",
+      }}
     >
-      <div
-        className="py-10 md:py-0 w-full relative"
-        style={{
-          perspective: "1000px",
-        }}
-      >
-        <Header translate={translate} titleComponent={titleComponent} />
-        <Card rotate={rotate} translate={translate} scale={scale}>
-          {children}
-        </Card>
-      </div>
+      <Card rotate={rotate} translate={translate} scale={scale}>
+        {children}
+      </Card>
     </div>
   );
 };
@@ -70,7 +68,7 @@ export const Header = ({ translate, titleComponent }: any) => {
       style={{
         translateY: translate,
       }}
-      className="div max-w-5xl mx-auto text-center"
+      className="div w-fit mx-auto text-center"
     >
       {titleComponent}
     </motion.div>
@@ -89,19 +87,36 @@ export const Card = ({
   children: React.ReactNode;
 }) => {
   return (
-    <motion.div
-      style={{
-        rotateX: rotate,
-        translateY: translate,
-        scale,
-        boxShadow:
-          "0 0 #0000004d, 0 9px 20px #0000004a, 0 37px 37px #00000042, 0 84px 50px #00000026, 0 149px 60px #0000000a, 0 233px 65px #00000003",
-      }}
-      className="max-w-5xl mt-12 mx-auto h-[30rem] md:h-[40rem] w-full rounded-[30px]"
-    >
-      <div className=" h-full w-full overflow-hidden rounded-2xl dark:bg-zinc-900 md:rounded-2xl">
-        {children}
+    <>
+      <motion.div
+        style={{
+          rotateX: rotate,
+          translateY: translate,
+          scale,
+        }}
+        className="mt-28 mx-auto h-fit w-fit rounded-[30px] shadow-2xl"
+      >
+        <div className=" h-fit w-fit overflow-hidden rounded-2xl dark:bg-zinc-900 md:rounded-2xl">
+          {children}
+        </div>
+      </motion.div>
+      <div className="max-w-[70rem] flex flex-col mx-auto gap-4">
+        <h3 className={cn(darker_grotesque.className, "flex-1  w-fit justify-start font-semibold text-[2.5rem]")}>CND Ekart</h3>
+        <p className="w-inherit mr-auto text-left text-lg leading-8">
+          This customized e-commerce application is designed to meet the specific needs of the steel and fabrication industry, enabling businesses to effectively manage and expand their operations. This project was developed for CND Engineering Pvt. Ltd. during my tenure as a software development intern. Checkout the code and case study to get a better perspective about the project.
+        </p>
+        <div className="flex gap-5 mt-10">
+          <Button variant="default" className="gap-3 w-[9rem]">
+            <RiGithubFill size={20} />
+            <p>Github</p>
+          </Button>
+          <Button variant="outline" className="gap-4 w-[9rem]">
+            <p>Case Study</p>
+            <RiArrowRightLine size={20} />
+          </Button>
+        </div>
       </div>
-    </motion.div>
+    </>
+
   );
 };
