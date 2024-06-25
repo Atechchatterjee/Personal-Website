@@ -4,7 +4,7 @@
   
   @layer base {
     :root {
-      --background: 33 82% 96%;
+      --background: 0 0% 3%;
       --foreground: 222.2 84% 4.9%;
 
       --card: 0 0% 100%;
@@ -76,23 +76,23 @@
     }
   }
   
-* {
-  scrollbar-width: thin;
-  scrollbar-color:  #475569;
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-/* Chrome, Edge, and Safari */
-*::-webkit-scrollbar {
-  width: 15px;
+/* Track */
+::-webkit-scrollbar-track {
+  background: #191919;
 }
 
-*::-webkit-scrollbar-track {
-  background:  #475569;
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
   border-radius: 5px;
 }
 
-*::-webkit-scrollbar-thumb {
-  background-color: #475569;
-  border-radius: 14px;
-  border: 3px solid slate-700;
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

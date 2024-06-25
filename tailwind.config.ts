@@ -1,4 +1,4 @@
-import type { Config } from "tailwindcss"
+import type { Config } from "tailwindcss";
 import svgToDataUri from "mini-svg-data-uri";
 import colors from "tailwindcss/colors";
 const {
@@ -8,10 +8,10 @@ const {
 const config = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -123,7 +123,7 @@ const config = {
   },
   plugins: [
     require("tailwindcss-animate"),
-    function({ matchUtilities, theme }: any) {
+    function ({ matchUtilities, theme }: any) {
       matchUtilities(
         {
           "bg-grid": (value: any) => ({
@@ -146,6 +146,18 @@ const config = {
       );
     },
   ],
-} satisfies Config
+} satisfies Config;
+//
+// This plugin adds each Tailwind color as a global CSS variable, e.g. var(--gray-200).
+function addVariablesForColors({ addBase, theme }: any) {
+  let allColors = flattenColorPalette(theme("colors"));
+  let newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val])
+  );
 
-export default config
+  addBase({
+    ":root": newVars,
+  });
+}
+
+export default config;

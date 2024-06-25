@@ -1,12 +1,11 @@
-"use client"
-
+"use client";
 import React from "react";
-import { darker_grotesque } from "@/app/font";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
-import { RiArrowRightLine, RiHomeFill, RiReactjsLine, RiStackFill, RiUser3Fill, RiUser4Fill, RiUser6Fill } from "@remixicon/react";
+import { RiMailSendFill } from "@remixicon/react";
 import { FloatingNav } from "./ui/floating-navbar";
-import { Link, animateScroll as scroll } from 'react-scroll';
+import { Link, animateScroll as scroll } from "react-scroll";
+import Image from "next/image";
 
 export function NavLink({ scrollTo, className, children, ...props }: any) {
   return (
@@ -17,7 +16,10 @@ export function NavLink({ scrollTo, className, children, ...props }: any) {
       offset={50}
       duration={500}
       onClick={() => scroll.scrollTo(scrollTo ?? 650)}
-      className={cn("font-medium text-sm text-[#5C5C5C] hover:text-black hover:underline hover:underline-offset-4 cursor-pointer", className)}
+      className={cn(
+        "font-regular text-gray-300 hover:text-white hover:font-medium hover:underline hover:underline-offset-4 cursor-pointer",
+        className
+      )}
       {...props}
     >
       {children}
@@ -28,27 +30,48 @@ export function NavLink({ scrollTo, className, children, ...props }: any) {
 export default function Navbar() {
   return (
     <>
-      <div className="flex flex-row flex-1 py-6 w-[80rem] mx-auto items-center">
-        <p className={
-          cn(darker_grotesque.className, "font-semibold text-2xl items-center mt-[-0.4rem]")
-        }>://webdeveloper</p>
-        <div className="flex-1 flex flex-row gap-6 justify-center">
+      <div className="absolute z-[1000000] flex flex-row flex-1 py-6 w-[80rem] mx-auto items-center  top-0 left-[50%] translate-x-[-50%] translate-y-[-150%]">
+        <Image src="/logo-dark.svg" width={80} height={50} alt="logo" />
+        <div className="flex-1 flex flex-row gap-8 justify-center">
           <NavLink scrollTo={80}>Home</NavLink>
-          <NavLink scrollTo={650}>Work</NavLink>
-          <NavLink>About</NavLink>
-          <NavLink>Techstack</NavLink>
+          <NavLink scrollTo={970}>Work</NavLink>
+          <NavLink scrollTo={3400}>Techstack</NavLink>
+          <NavLink scrollTo={3800}>Contact</NavLink>
         </div>
-        <Button variant="outline" className="gap-5 ml-auto" onClick={() => window.location.assign("/contact")}>
-          <p>Let's Talk</p>
-          <RiArrowRightLine size={20} />
+        <Button
+          variant="outline-dark"
+          className="gap-3 ml-auto"
+          onClick={() => scroll.scrollTo(3900)}
+        >
+          <RiMailSendFill size={20} />
+          <p>Reach Out</p>
         </Button>
       </div>
-      <FloatingNav navItems={[
-        { name: "Home", link: "/", icon: <RiHomeFill size={15} />, scrollTo: 80 },
-        { name: "Work", link: "/", icon: <RiStackFill size={15} />, scrollTo: 600 },
-        { name: "About", link: "/", icon: <RiUser3Fill size={15} /> },
-        { name: "TechStack", link: "/", icon: <RiReactjsLine size={15} /> },
-      ]} />
+      <FloatingNav
+        className="dark"
+        navItems={[
+          {
+            name: "Home",
+            link: "/",
+            scrollTo: 0,
+          },
+          {
+            name: "Work",
+            link: "/",
+            scrollTo: 930,
+          },
+          {
+            name: "TechStack",
+            link: "/",
+            scrollTo: 3400,
+          },
+          {
+            name: "Contact",
+            link: "/",
+            scrollTo: 3900,
+          },
+        ]}
+      />
     </>
   );
 }

@@ -1,13 +1,12 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { useScroll, useTransform, motion, MotionValue, circOut, circIn } from "framer-motion";
+import { useScroll, useTransform, motion, MotionValue } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { darker_grotesque } from "@/app/font";
 import { Button } from "./button";
-import { RiDownload2Line, RiStackFill, RiGithubFill, RiArrowRightFill, RiArrowRightLine } from "@remixicon/react";
+import { RiGithubFill, RiArrowRightLine } from "@remixicon/react";
 
 export const ContainerScroll = ({
-  titleComponent,
   children,
 }: {
   titleComponent: string | React.ReactNode;
@@ -16,7 +15,7 @@ export const ContainerScroll = ({
   const containerRef = useRef<any>(null);
   const { scrollY, scrollYProgress } = useScroll({
     target: containerRef,
-    smooth: 10
+    smooth: 10,
   });
   const [isMobile, setIsMobile] = React.useState(false);
 
@@ -35,17 +34,12 @@ export const ContainerScroll = ({
     return isMobile ? [0.7, 0.9] : [1, 1];
   };
 
-  const rotate = useTransform(
-    scrollY,
-    [0, 1000],
-    [20, 0],
-    { clamp: true }
-  )
+  const rotate = useTransform(scrollY, [0, 1000], [20, 0], { clamp: true });
   const scale = useTransform(scrollYProgress, [0, 1], scaleDimensions());
   const translate = useTransform(scrollYProgress, [10, 10], [0, -100]);
 
   useEffect(() => {
-    console.log({ rotate: rotate.get() })
+    console.log({ rotate: rotate.get() });
   });
 
   return (
@@ -101,9 +95,21 @@ export const Card = ({
         </div>
       </motion.div>
       <div className="max-w-[70rem] flex flex-col mx-auto gap-4">
-        <h3 className={cn(darker_grotesque.className, "flex-1  w-fit justify-start font-semibold text-[2.5rem]")}>CND Ekart</h3>
+        <h3
+          className={cn(
+            darker_grotesque.className,
+            "flex-1  w-fit justify-start font-semibold text-[2.5rem]"
+          )}
+        >
+          CND Ekart
+        </h3>
         <p className="w-inherit mr-auto text-left text-lg leading-8">
-          This customized e-commerce application is designed to meet the specific needs of the steel and fabrication industry, enabling businesses to effectively manage and expand their operations. This project was developed for CND Engineering Pvt. Ltd. during my tenure as a software development intern. Checkout the code and case study to get a better perspective about the project.
+          This customized e-commerce application is designed to meet the
+          specific needs of the steel and fabrication industry, enabling
+          businesses to effectively manage and expand their operations. This
+          project was developed for CND Engineering Pvt. Ltd. during my tenure
+          as a software development intern. Checkout the code and case study to
+          get a better perspective about the project.
         </p>
         <div className="flex gap-5 mt-10">
           <Button variant="default" className="gap-3 w-[9rem]">
@@ -117,6 +123,5 @@ export const Card = ({
         </div>
       </div>
     </>
-
   );
 };
